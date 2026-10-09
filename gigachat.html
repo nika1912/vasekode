@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мини‑курс Python: основы</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --accent: #06b6d4;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card: #ffffff;
+            --code-bg: #1e1e1e;
+            --code-fg: #d6deeb;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            padding: 2rem 1rem;
+            text-align: center;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,.1);
+        }
+        h1 { margin: 0; color: var(--primary); }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+        button {
+            padding: .6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all .2s;
+        }
+        .btn-module {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        .btn-module:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+        }
+        main {
+            max-width: 920px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+        section { display: none; animation: fadeIn .3s ease; }
+        section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: .4rem;
+        }
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+        }
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            color: #1e293b;
+        }
+        .task {
+            background: var(--card);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1.2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06);
+        }
+        textarea {
+            width: 100%;
+            height: 140px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            padding: .5rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .feedback {
+            margin-top: .7rem;
+            padding: .5rem .75rem;
+            border-radius: 4px;
+            display: none;
+        }
+        .success { background: #dcfce7; color: #166534; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .tip {
+            background: #eff6ff;
+            color: #1e40af;
+            padding: .75rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            color: #64748b;
+            font-size: .9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мини‑курс Python</h1>
+        <p>Теория + практика в одном файле. Подходит для старта.</p>
+        <nav class="nav">
+            <button class="btn-module" onclick="show('intro')">Старт</button>
+            <button class="btn-module" onclick="show('basics')">Переменные и ввод</button>
+            <button class="btn-module" onclick="show('conditions')">Условия</button>
+            <button class="btn-module" onclick="show('loops')">Циклы</button>
+            <button class="btn-module" onclick="show('functions')">Функции</button>
+            <button class="btn-module" onclick="show('collections')">Списки и словари</button>
+            <button class="btn-module" onclick="show('files')">Файлы и ошибки</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Intro -->
+        <section id="intro" class="active">
+            <h2>Старт: что это и как пользоваться</h2>
+            <p>Это мини‑аналог учебного курса: теория, примеры, задачи и проверка кода. Всё в одном файле — просто сохрани как <code>index.html</code> и открой в браузере.</p>
+            <div class="tip">
+                <strong>Важно:</strong> в браузере нельзя запустить настоящий Python. Проверка задач — по ключевым словам. Для реальной проверки используй локальный интерпретатор или онлайн‑компиляторы (Replit, Google Colab).
+            </div>
+        </section>
+
+        <!-- Basics -->
+        <section id="basics">
+            <h2>Переменные и ввод</h2>
+            <p>В Python блоки кода выделяются отступами. Переменные создаются присваиванием, ввод — через <code>input()</code>, вывод — через <code>print()</code>.</p>
+            <pre><code># Пример
+name = input("Как тебя зовут? ")
+age = int(input("Сколько тебе лет? "))
+print(f"Привет, {name}! Тебе {age} лет.")</code></pre>
+            <div class="task">
+                <h3>Задача 1</h3>
+                <p>Запроси у пользователя два числа и выведи их сумму.</p>
+                <textarea id="task1" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task1', 'check1')">Проверить</button>
+                <div id="check1" class="feedback"></div>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> забывают преобразовать ввод в число (<code>int()</code>), путают <code>+</code> для строк и чисел, не используют <code>f-строки</code> или конкатенацию.
+            </div>
+        </section>
+
+        <!-- Conditions -->
+        <section id="conditions">
+            <h2>Условия и логика</h2>
+            <p>Условные конструкции <code>if/elif/else</code> и логические операторы <code>and/or/not</code> позволяют управлять потоком программы.</p>
+            <pre><code>age = int(input("Твой возраст: "))
+if age >= 18:
+    print("Доступ разрешён.")
+elif age >= 13:
+    print("Требуется согласие родителей.")
+else:
+    print("Доступ запрещён.")</code></pre>
+            <div class="task">
+                <h3>Задача 2</h3>
+                <p>Пользователь вводит число. Выведи «Положительное», «Отрицательное» или «Ноль» в зависимости от значения.</p>
+                <textarea id="task2" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task2', 'check2')">Проверить</button>
+                <div id="check2" class="feedback"></div>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> используют только <code>if</code>, забывая про <code>elif/else</code>; сравнивают строки вместо чисел; пишут условия в неверном порядке.
+            </div>
+        </section>
+
+        <!-- Loops -->
+        <section id="loops">
+            <h2>Циклы</h2>
+            <p>Цикл <code>for</code> перебирает элементы, <code>while</code> работает, пока условие истинно.</p>
+            <pre><code>for i in range(1, 6):
+    print(i)
+
+i = 1
+while i <= 5:
+    print(i)
+    i += 1</code></pre>
+            <div class="task">
+                <h3>Задача 3</h3>
+                <p>Выведи таблицу умножения на число N (вводится пользователем) от 1 до 10.</p>
+                <textarea id="task3" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task3', 'check3')">Проверить</button>
+                <div id="check3" class="feedback"></div>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> путают границы <code>range()</code>; забывают про шаг; используют <code>while</code> без изменения счётчика (бесконечный цикл).
+            </div>
+        </section>
+
+        <!-- Functions -->
+        <section id="functions">
+            <h2>Функции</h2>
+            <p>Функции объявляются через <code>def</code>, принимают аргументы и могут возвращать результат.</p>
+            <pre><code>def greet(name):
+    return f"Привет, {name}!"
+
+def add(a, b):
+    return a + b</code></pre>
+            <div class="task">
+                <h3>Задача 4</h3>
+                <p>Создай функцию <code>is_prime(n)</code>, которая возвращает <code>True</code>, если число простое, и <code>False</code> в противном случае. Проверь её на нескольких числах.</p>
+                <textarea id="task4" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task4', 'check4')">Проверить</button>
+                <div id="check4" class="feedback"></div>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> забывают <code>return</code>; используют <code>print</code> вместо возврата значения; не проверяют граничные случаи (0, 1, отрицательные числа).
+            </div>
+        </section>
+
+        <!-- Collections -->
+        <section id="collections">
+            <h2>Списки и словари</h2>
+            <p>Списки — изменяемые упорядоченные коллекции, словари — пары ключ‑значение.</p>
+            <pre><code>fruits = ["яблоко", "банан", "вишня"]
+fruits.append("груша")
+
+person = {"name": "Иван", "age": 30}
+print(person["name"])</code></pre>
+            <div class="task">
+                <h3>Задача 5</h3>
+                <p>Создай список из 5 чисел. Найди максимальное и минимальное значение. Создай словарь с тремя парами ключ‑значение и выведи все ключи.</p>
+                <textarea id="task5" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task5', 'check5')">Проверить</button>
+                <div id="check5" class="feedback"></div>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> пытаются использовать <code>.keys()</code> на списке; путают индексацию списка и доступ по ключу словаря; забывают, что индексы начинаются с 0.
+            </div>
+        </section>
+
+        <!-- Files -->
+        <section id="files">
+            <h2>Файлы и обработка ошибок</h2>
+            <p>Чтение и запись файлов через <code>open()</code> с контекстным менеджером <code>with</code>. Обработка исключений — через <code>try/except</code>.</p>
+            <pre><code>try:
+    with open("data.txt", "r", encoding="utf-8") as f:
+        content = f.read()
+        print(content)
+except FileNotFoundError:
+    print("Файл не найден.")</code></pre>
+            <div class="task">
+                <h3>Задача 6</h3>
+                <p>Попробуй прочитать несуществующий файл и корректно обработай ошибку: выведи понятное сообщение, а не технический traceback.</p>
+                <textarea id="task6" placeholder="Вставь свой код здесь..."></textarea>
+                <button class="btn-module" onclick="checkTask('task6', 'check6')">Проверить</button>
+                <div id="check6" class="feedback"></div>
+                <p style="font-size:.9rem; color:#64748b; margin-top:.5rem;">
+                    <em>Важно: запись и чтение файлов в браузере не работают из‑за политик безопасности. Выполняй эту задачу в локальной среде (VS Code, PyCharm и т. п.).</em>
+                </p>
+            </div>
+            <div class="tip">
+                <strong>Частые ошибки:</strong> ловят слишком общее исключение (<code>except Exception</code>) вместо конкретного; не используют <code>with</code>; забывают указать кодировку <code>encoding="utf-8"</code>.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Это учебный проект в одном файле — не замена полноценному курсу FreeCodeCamp. Для глубокого изучения пройди оригинальный курс на freecodecamp.org.</p>
+    </footer>
+
+    <script>
+        function show(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkTask(inputId, feedbackId) {
+            const code = document.getElementById(inputId).value.trim();
+            const feedback = document.getElementById(feedbackId);
+            feedback.className = 'feedback';
+
+            if (!code) {
+                feedback.textContent = 'Пожалуйста, вставьте код.';
+                feedback.classList.add('error');
+                return;
+            }
+
+            // Эвристическая проверка по ключевым словам
+            const checks = {
+                task1: () => code.includes('input') && code.includes('int') && code.includes('print') && code.includes('+'),
+                task2: () => code.includes('if') && (code.includes('elif') || code.includes('else')),
+                task3: () => code.includes('for') && code.includes('range') && code.includes('*'),
+                task4: () => code.includes('def is_prime') && (code.includes('return') || code.includes('True') || code.includes('False')),
+                task5: () => (code.includes('list') || code.includes('[') && code.includes(']')) && (code.includes('max') || code.includes('min')) && (code.includes('dict') || code.includes('{') && code.includes('}')) && code.includes('.keys()'),
+                task6: () => code.includes('try') && code.includes('except') && (code.includes('FileNotFoundError') || code.includes('IOError'))
+            };
+
+            if (checks[inputId]) {
+                if (checks[inputId]()) {
+                    feedback.textContent = 'Отлично! Код содержит нужные элементы.';
+                    feedback.classList.add('success');
+                } else {
+                    feedback.textContent = 'Проверь, что в коде есть ключевые конструкции (input, if/elif/else, for, def, try/except и т. д.).';
+                    feedback.classList.add('error');
+                }
+            } else {
+                feedback.textContent = 'Не удалось проверить эту задачу автоматически. Посмотри пример и попробуй снова.';
+                feedback.classList.add('error');
+            }
+        }
+    </script>
+</body>
+</html>
+
